@@ -10,3 +10,14 @@ export type InputProps = {
   passwordVisible?: boolean | null,
   ChangePasswordVisibility?: () => void,
 };
+
+export type ButtonProps = {
+  children: React.ReactNode;
+  onClick?: () => void;
+  bootstrapClass?: string;
+  disabled?: {
+    value: boolean;
+    reason: string;
+  };
+  type: 'button' | 'submit' | 'reset';
+};

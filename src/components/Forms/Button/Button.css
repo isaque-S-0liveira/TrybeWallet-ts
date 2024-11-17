@@ -1,0 +1,14 @@
+/* stylelint-disable linebreaks */
+.button-container button {
+  width: 100%;
+}
+
+/* Customiza a cor do fundo e do texto do tooltip */
+.custom-tooltip .tooltip-inner {
+  background-color: #4caf50;
+}
+
+/* Customiza a seta (triângulo abaixo do tooltip) */
+.custom-tooltip .tooltip-arrow:before {
+  border-bottom-color: #4caf50; /* Mesma cor do fundo do tooltip */
+}
