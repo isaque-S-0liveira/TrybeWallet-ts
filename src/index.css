@@ -5,3 +5,12 @@ html, body,  #root{
   height: 100%;
   overflow: hidden;
 }
+
+body {
+  background-image: url('./images/wallet_backgroud.png');
+  background-color: rgb(47, 193, 140);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
