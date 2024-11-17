@@ -1,0 +1,12 @@
+/* stylelint-disable linebreaks */
+.inputPasswordContainer {
+  position: relative;
+}
+
+.inputPasswordContainer i {
+  cursor: pointer;
+  font-size: 20px;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
