@@ -3,6 +3,7 @@ import { InputProps } from '../../../types/FormsTypes';
 import './Input.css';
 
 function Input({
+  testId,
   bootstrapClass = 'col-12',
   name,
   type,
@@ -26,6 +27,7 @@ function Input({
     >
       {label && <label className="input-label">{label}</label>}
       <input
+        data-testid={ testId }
         name={ name }
         type={ inputType }
         placeholder={ placeholder }

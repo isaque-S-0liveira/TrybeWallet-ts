@@ -3,6 +3,7 @@ import { ButtonProps } from '../../../types/FormsTypes';
 import './Button.css';
 
 function Button({
+  testId,
   type,
   children,
   bootstrapClass = 'col-12',
@@ -25,6 +26,7 @@ function Button({
     >
       <div className={ `button-container ${bootstrapClass}` }>
         <button
+          data-testid={ testId }
           type={ type }
           className="btn btn-primary"
           onClick={ onClick }

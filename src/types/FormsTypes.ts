@@ -1,5 +1,6 @@
 export type InputProps = {
   bootstrapClass?: string;
+  testId?: string;
   name: string;
   type: 'text' | 'password' | 'email' | 'number';
   placeholder: string;
@@ -12,6 +13,7 @@ export type InputProps = {
 };
 
 export type ButtonProps = {
+  testId?: string;
   children: React.ReactNode;
   onClick?: () => void;
   bootstrapClass?: string;
