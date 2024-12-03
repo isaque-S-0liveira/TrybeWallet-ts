@@ -1,10 +1,11 @@
 import { screen } from '@testing-library/react';
-import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
+import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 
-describe('Testa se no Wallet', () => {
+describe('Testa se no Header do componente Wallet', () => {
   it('O email do usuário é renderizado na tela', () => {
-    renderWithRouterAndRedux(<Wallet />, '/carteira', { user: { email: 'test@email.com' } });
+    renderWithRouterAndRedux(<Wallet />, '/carteira', { user: { email: 'test@email.com' }, wallet: { isLoading: false, error: '', expenses: [] }, _persist: { rehydrated: true, version: -1 } });
+
     const emails = screen.getAllByTestId('email-field');
     const email = emails[0];
     expect(email).toBeInTheDocument();
@@ -16,5 +17,12 @@ describe('Testa se no Wallet', () => {
     const totalExpenses = totalsExpenses[0];
     expect(totalExpenses).toBeInTheDocument();
     expect(totalExpenses).toHaveTextContent('0');
+  });
+  it('O campo de moeda é renderizado na tela e seu valor é BRL', () => {
+    renderWithRouterAndRedux(<Wallet />, '/carteira');
+    const currencies = screen.getAllByTestId('header-currency-field');
+    const currency = currencies[0];
+    expect(currency).toBeInTheDocument();
+    expect(currency).toHaveTextContent('BRL');
   });
 });

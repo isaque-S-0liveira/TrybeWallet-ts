@@ -4,13 +4,14 @@ import userEvent from '@testing-library/user-event';
 import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { thunk } from 'redux-thunk';
+import { PersistPartial } from 'redux-persist/lib/persistReducer';
 import rootReducer from '../../redux/reducers/index.ts';
 import { ReduxState } from '../../types/Redux.ts';
 
 function renderWithRouterAndRedux(
   component: JSX.Element,
   route: string = '/',
-  state: ReduxState | undefined = undefined,
+  state: (ReduxState & PersistPartial) | undefined = undefined,
   store = createStore(rootReducer, state, applyMiddleware(thunk)),
 ) {
   window.history.pushState({}, 'Test page', route);
