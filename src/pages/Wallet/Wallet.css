@@ -9,8 +9,15 @@
 #main-header {
     background-color: white;
     width: 100%;
+    padding-bottom: 2rem;
 }
 
+@media screen and (min-width: 992px) {
+    #main-header {
+       width: 90%;
+    }
+    
+}
 
 @media screen and (min-width: 1200px) {
     #main-header {

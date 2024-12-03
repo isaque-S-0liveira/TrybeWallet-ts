@@ -1,4 +1,5 @@
 import Header from '../../components/Header/Header';
+import WalletForm from '../../components/WalletForm/WalletForm';
 import './Wallet.css';
 
 function Wallet() {
@@ -6,6 +7,7 @@ function Wallet() {
     <main id="main-wallet">
       <div id="main-header">
         <Header />
+        <WalletForm />
       </div>
     </main>
   );
