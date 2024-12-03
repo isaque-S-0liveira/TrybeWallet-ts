@@ -1,29 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { ReduxState } from '../../types/Redux';
 
 function UserEmail({
-  email: initialEmail,
   containerClass = '',
 }: {
-  email: string;
   containerClass?: string;
 }) {
-  const [email, setEmail] = useState<string>('');
-
-  useEffect(() => {
-    const storedEmail = localStorage.getItem('userEmail');
-    if (storedEmail) {
-      setEmail(storedEmail);
-    } else {
-      setEmail(initialEmail);
-    }
-  }, [initialEmail]);
-
-  useEffect(() => {
-    if (email) {
-      localStorage.setItem('userEmail', email);
-    }
-  }, [email]);
-
+  const email = useSelector((state: ReduxState) => state.user.email);
   return (
     <div id="email-field-container" className={ `ms-1 icon-text ${containerClass}` }>
       <i className="bi bi-person-circle me-2" aria-hidden="true" />
