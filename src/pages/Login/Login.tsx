@@ -40,6 +40,7 @@ function Login() {
       <div className="login-form-container container">
         <img src={ logo } alt="logo" />
         <Input
+          id="email"
           testId="email-input"
           bootstrapClass="col-8 mb-2"
           onChange={ handleChange }
@@ -50,6 +51,7 @@ function Login() {
           required
         />
         <Input
+          id="password"
           testId="password-input"
           bootstrapClass="col-8"
           onChange={ handleChange }
