@@ -14,14 +14,13 @@ function Button({
     <OverlayTrigger
       placement="bottom"
       overlay={
-        disabled.value ? (
-          <Tooltip
-            className="custom-tooltip"
-            id="button-tooltip"
-          >
-            {disabled.reason}
-          </Tooltip>
-        ) : <span />
+        <Tooltip
+          className={ `${disabled.value ? 'custom-tooltip' : 'd-none'}` }
+          id="button-tooltip"
+        >
+          {disabled.reason}
+        </Tooltip>
+
       }
     >
       <div className={ `button-container ${bootstrapClass}` }>
