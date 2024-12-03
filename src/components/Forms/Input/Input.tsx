@@ -3,6 +3,7 @@ import { InputProps } from '../../../types/FormsTypes';
 import './Input.css';
 
 function Input({
+  id,
   testId,
   bootstrapClass = 'col-12',
   name,
@@ -11,36 +12,49 @@ function Input({
   label = null,
   onChange,
   value,
-  required = false }: InputProps) {
+  required = false,
+  autoComplete = 'off' }: InputProps) {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  let inputType = type;
-  if (type === 'password') {
-    inputType = passwordVisible ? 'text' : 'password';
-  }
+  const handlePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   return (
     <div
-      className={ `${bootstrapClass} ${
-        type === 'password' && 'inputPasswordContainer'
-      }` }
+      className={ `
+        text-nowrap
+        ${bootstrapClass} 
+        ${type === 'password' && 'input-password-wrapper'}
+        ${label && 'd-sm-flex align-items-center'}
+        ` }
     >
-      {label && <label className="input-label">{label}</label>}
+      { label && (
+        <label className="me-2" htmlFor={ id }>
+          {label}
+          :
+        </label>
+      )}
       <input
+        id={ id }
         data-testid={ testId }
         name={ name }
-        type={ inputType }
+        type={ type === 'password' && passwordVisible ? 'text' : type }
         placeholder={ placeholder }
         value={ value }
         onChange={ onChange }
         className="form-control"
         required={ required }
+        min={ type === 'number' ? '0' : undefined }
+        autoComplete={ autoComplete }
+        aria-label={ label || placeholder || name }
       />
       {type === 'password' && (
         <button
-          onClick={ () => setPasswordVisible(!passwordVisible) }
+          onClick={ handlePasswordVisibility }
           type="button"
           className="bg-transparent border-0"
+          aria-label={ passwordVisible ? 'Esconder senha' : 'Mostrar senha' }
         >
           {passwordVisible ? (
             <i className="bi bi-eye" />

@@ -1,9 +1,9 @@
 /* stylelint-disable linebreaks */
-.inputPasswordContainer {
+.input-password-wrapper {
   position: relative;
 }
 
-.inputPasswordContainer i {
+.input-password-wrapper i {
   cursor: pointer;
   font-size: 20px;
   position: absolute;
