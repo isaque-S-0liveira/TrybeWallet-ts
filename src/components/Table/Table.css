@@ -1,0 +1,123 @@
+#main-table {
+    background-color: blue;
+    width: 100%;
+    height: auto;
+    padding-bottom: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#table-container {
+    width: 100%;
+    height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+#container-fantasma {
+    height: 0;
+}
+
+#main-table table {
+    width: 100%;
+    border-spacing: 0px 10px;
+    border-collapse: separate;
+    
+}
+
+
+#main-table th {
+    color: white;
+    font-size: 1em;
+    font-weight: 400;
+    border-left: 1px solid rgba(255, 255, 255, 1);
+    padding: 8px; 
+    min-width: 110px;
+    text-align: center;
+    vertical-align: middle;
+    height: 26px;
+    line-height: 26px; 
+    box-sizing: border-box;
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+#main-table #th-1 {
+    border-left: none;
+    width: 50px;
+    max-width: 100px;
+}
+
+#main-table td {
+    border-top: 2px solid rgba(47, 193, 140, 1); 
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+    color: rgba(47, 193, 140, 1);
+}
+
+#main-table th {
+    color: white;
+}
+
+#main-table .highlighted-row {
+    border-color: white !important;
+}
+
+#main-table button {
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+#main-table i {
+    font-size: 1.2em;
+}
+
+#main-table .bi-pencil-square {
+    color: rgba(47, 193, 140, 1); 
+}  
+
+#main-table .bi-trash-fill {
+    color: rgba(223, 60, 109, 1)
+}
+
+#table-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#table-container::-webkit-scrollbar-thumb {
+    background-color: #4CAF50;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+#main-table nav {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#main-table nav .page-item {
+    cursor: pointer;
+}
+
+@media screen and (min-width: 992px) {
+    #main-table {
+        position: absolute;
+        top: 84px; 
+        max-width: 95%;
+    }
+
+    #container-fantasma {
+        height: 253px;
+    }
+
+    #main-table td {
+        max-width: 110px;
+    }
+}
