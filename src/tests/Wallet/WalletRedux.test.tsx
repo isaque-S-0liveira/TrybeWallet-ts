@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
-import { mockData, mockExchangeRates } from '../mocks/mock';
+import { mockData, mockExchangeRates, mockState } from '../mocks/mock';
 import getWalletFormElements from '../utils/getWalletFormElements';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
@@ -74,26 +74,7 @@ describe('Testes wallet redux', () => {
 
     await waitFor(() => {
       expect(store.getState().wallet.expenses).toHaveLength(2);
-      expect(store.getState().wallet.expenses).toEqual([
-        {
-          id: 0,
-          value: '100',
-          description: comprasDoMes,
-          currency: 'USD',
-          method: 'Dinheiro',
-          tag: tagAlimentacao,
-          exchangeRates: mockExchangeRates,
-        },
-        {
-          id: 1,
-          value: '200',
-          description: 'Viagem',
-          currency: 'CAD',
-          method: 'Cartão de crédito',
-          tag: 'Lazer',
-          exchangeRates: mockExchangeRates,
-        },
-      ]);
+      expect(store.getState().wallet.expenses).toEqual(mockState);
     });
   });
 });

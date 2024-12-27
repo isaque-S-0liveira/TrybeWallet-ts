@@ -5,8 +5,8 @@ function TableHeader() {
       <th>Descrição</th>
       <th>Tag</th>
       <th>Método de pagamento</th>
-      <th>Valor</th>
-      <th>Moeda</th>
+      <th data-testid="value">Valor</th>
+      <th data-testid="currency">Moeda</th>
       <th>Câmbio utilizado</th>
       <th>Valor convertido</th>
       <th>Moeda de conversão</th>
