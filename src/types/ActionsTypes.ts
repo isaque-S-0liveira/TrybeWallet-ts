@@ -3,6 +3,11 @@ export const REQUEST_STARTED = 'REQUEST_STARTED';
 export const REQUEST_SUCCESSFUL = 'REQUEST_SUCCESSFUL';
 export const REQUEST_FAILED = 'REQUEST_FAILED';
 
+export type ExchangeRate = {
+  name: string;
+  ask: string;
+};
+
 export type ExpenseType = {
   id: number
   value: string;
@@ -10,5 +15,5 @@ export type ExpenseType = {
   currency: string;
   method: string;
   tag: string;
-  exchangeRates: object;
+  exchangeRates: Record<string, ExchangeRate>;
 };
