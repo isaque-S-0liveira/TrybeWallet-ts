@@ -1,0 +1,23 @@
+   .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .page-item .page-link {
+    border: 1px solid #fffefe !important;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: transparent !important;
+  }
+  
+  .page-item.active .page-link {
+    background-color: rgba(47, 193, 140, 1) !important;
+
+    color: #fff;
+  }
+  
+  .page-item .page-link:hover {
+    background-color: #eee;
+  }
+  
