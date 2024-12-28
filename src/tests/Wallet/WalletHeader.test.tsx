@@ -1,6 +1,7 @@
 import { screen } from '@testing-library/react';
 import Wallet from '../../pages/Wallet/Wallet';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
+import { mockValidState } from '../mocks/mock';
 
 describe('Testa se no Header do componente Wallet', () => {
   it('O email do usuário é renderizado na tela', () => {
@@ -24,5 +25,12 @@ describe('Testa se no Header do componente Wallet', () => {
     const currency = currencies[0];
     expect(currency).toBeInTheDocument();
     expect(currency).toHaveTextContent('BRL');
+  });
+
+  it('O valor total de despesas é renderizado na tela com o valor correto', () => {
+    renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
+    const totalsExpenses = screen.getAllByTestId('total-field');
+    const totalExpenses = totalsExpenses[0];
+    expect(totalExpenses).toHaveTextContent('1401');
   });
 });
