@@ -77,7 +77,7 @@ export const initialState = {
   _persist: { rehydrated: true, version: -1 },
 };
 
-export const mockState = [
+export const mockExpensesState = [
   {
     id: 0,
     value: '100',
@@ -97,3 +97,10 @@ export const mockState = [
     exchangeRates: mockExchangeRates,
   },
 ];
+
+export const mockValidState = { user: { email: '' },
+  wallet: {
+    isLoading: false,
+    error: '',
+    expenses: mockExpensesState },
+  _persist: { rehydrated: true, version: -1 } };

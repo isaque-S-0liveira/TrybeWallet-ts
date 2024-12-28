@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import Wallet from '../../pages/Wallet/Wallet';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
-import { mockState } from '../mocks/mock';
+import { mockValidState } from '../mocks/mock';
 
 describe('Testa se na Tabela do componente Wallet', () => {
   it('Os campos do header da tabela são renderizados corretamente', () => {
@@ -31,12 +31,7 @@ describe('Testa se na Tabela do componente Wallet', () => {
   });
 
   it('Os campos do body da tabela são renderizados corretamente', () => {
-    renderWithRouterAndRedux(<Wallet />, '/carteira', { user: { email: '' },
-      wallet: {
-        isLoading: false,
-        error: '',
-        expenses: mockState },
-      _persist: { rehydrated: true, version: -1 } });
+    renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
 
     const description = screen.getByRole('cell', { name: /compras do mês/i });
     const tag1 = screen.getByRole('cell', { name: /alimentação/i });
