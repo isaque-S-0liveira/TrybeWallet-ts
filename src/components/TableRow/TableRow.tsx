@@ -1,3 +1,5 @@
+import ValueFormatter from '../../services/valueFormater';
+
 type TableRowProps = {
   expense: any;
   isFirst: boolean;
@@ -12,18 +14,16 @@ function TableRow({ expense, isFirst }: TableRowProps) {
       <td className={ rowClass }>{expense.description}</td>
       <td className={ rowClass }>{expense.tag}</td>
       <td className={ rowClass }>{expense.method}</td>
-      <td className={ rowClass }>{expense.value}</td>
+      <td className={ rowClass }>{ValueFormatter({ value: Number(expense.value) })}</td>
       <td className={ rowClass }>
         {expense.exchangeRates[expense.currency].name.split('/')[0]}
       </td>
       <td className={ rowClass }>
-        {Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}
+        {ValueFormatter({ value: Number(expense.exchangeRates[expense.currency].ask) })}
       </td>
       <td className={ rowClass }>
-        {(
-          Number(expense.exchangeRates[expense.currency].ask)
-          * Number(expense.value)
-        ).toFixed(2)}
+        {ValueFormatter({ value: Number(expense.exchangeRates[expense.currency].ask)
+          * Number(expense.value) })}
       </td>
       <td className={ rowClass }>Real</td>
       <td className={ rowClass }>

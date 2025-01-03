@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import coinsIcon from '../../images/Moedas.png';
 import { ReduxState } from '../../types/Redux';
+import ValueFormatter from '../../services/valueFormater';
 
 type TotalExpensesProps = {
   containerClass?: string;
@@ -24,7 +25,7 @@ function TotalExpenses({ containerClass = '' }: TotalExpensesProps) {
       <div className="ms-1">
         <span className="fw-bold me-1">Total de despesas:</span>
         <span data-testid="total-field">
-          {expenses.length === 0 ? '0.00' : totalExpenses.toFixed(2)}
+          {ValueFormatter({ value: totalExpenses })}
         </span>
         <span className="ms-1" data-testid="header-currency-field">BRL</span>
       </div>
