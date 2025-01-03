@@ -31,6 +31,6 @@ describe('Testa se no Header do componente Wallet', () => {
     renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
     const totalsExpenses = screen.getAllByTestId('total-field');
     const totalExpenses = totalsExpenses[0];
-    expect(totalExpenses).toHaveTextContent('1401');
+    expect(totalExpenses).toHaveTextContent('1.401,7');
   });
 });
