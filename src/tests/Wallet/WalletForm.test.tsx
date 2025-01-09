@@ -1,10 +1,10 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { screen, waitFor } from '@testing-library/react';
-import { vi } from 'vitest';
+import { it, vi } from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
-import { mockData, SelectCurrencyOptions } from '../mocks/mock';
-import getWalletFormElements from '../utils/getWalletFormElements';
+import { mockData, mockValidState, SelectCurrencyOptions } from '../mocks/mock';
+import { getWalletFormElements, getEditExpenseElements } from '../utils/getWalletElements';
 
 describe('Testa se no WalletForm', () => {
   const MOCK_RESPONSE = {
@@ -79,6 +79,22 @@ describe('Testa se no WalletForm', () => {
       expect(currencyInput).toHaveValue('USD');
       expect(paymentMethodInput).toHaveValue('Dinheiro');
       expect(tagInput).toHaveValue('Alimentação');
+    });
+  });
+  it.only('Testa se ao clicar no botão de editar despesa o formulário é preenchido com as informações da despesa que será editada', async () => {
+    const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
+    const { editExpenseButton, editExpenseFormButton } = getEditExpenseElements();
+    const { valueInput, descriptionInput, currencyInput, paymentMethodInput, tagInput } = getWalletFormElements();
+
+    await user.click(editExpenseButton[0]);
+
+    await waitFor(() => {
+      expect(valueInput).toHaveValue('100');
+      expect(descriptionInput).toHaveValue('Compras do mês');
+      expect(currencyInput).toHaveValue('USD');
+      expect(paymentMethodInput).toHaveValue('Dinheiro');
+      expect(tagInput).toHaveValue('Alimentação');
+      expect(editExpenseFormButton).toBeInTheDocument();
     });
   });
 });
