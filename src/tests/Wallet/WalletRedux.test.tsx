@@ -5,7 +5,7 @@ import { mockData, mockExchangeRates } from '../mocks/mock';
 import { getEditTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
-import { mockExpensesState } from '../mocks/reduxMoks';
+import { mockExpensesState, mockValidState } from '../mocks/reduxMoks';
 import { fillAndSubmitExpenseForm } from '../utils/interactions';
 
 describe('Testes wallet redux', () => {
@@ -67,5 +67,44 @@ describe('Testes wallet redux', () => {
       expect(store.getState().wallet.expenses).toEqual(mockExpensesState);
     });
   });
-  // it.fails('Testa se ao clicar no botão de Editar a despesa é editada corretamente no estado global do redux', async () => {});
+
+  it.only('Testa se ao clicar no botão de Editar a despesa é editada corretamente no estado global do redux', async () => {
+    const { user, store } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
+
+    await user.click(getEditTableExpenseElement().editExpenseButton[0]);
+
+    await fillAndSubmitExpenseForm(user, getWalletFormElements(), {
+      id: 1,
+      value: '250',
+      description: 'Viagem para a praia',
+      currency: 'CAD',
+      method: 'Cartão de crédito',
+      tag: 'Lazer',
+      exchangeRates: mockExchangeRates,
+    });
+
+    await waitFor(() => {
+      expect(store.getState().wallet.expenses).toHaveLength(2);
+      expect(store.getState().wallet.expenses).toEqual([
+        {
+          id: 1,
+          value: '250',
+          description: 'Viagem para a praia',
+          currency: 'CAD',
+          method: 'Cartão de crédito',
+          tag: 'Lazer',
+          exchangeRates: mockExchangeRates,
+        },
+        {
+          id: 2,
+          value: '200',
+          description: 'Viagem',
+          currency: 'CAD',
+          method: 'Cartão de crédito',
+          tag: 'Lazer',
+          exchangeRates: mockExchangeRates,
+        },
+      ]);
+    });
+  });
 });
