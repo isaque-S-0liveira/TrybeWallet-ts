@@ -4,7 +4,7 @@ import { it, vi } from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
 import { mockData, mockValidState, SelectCurrencyOptions } from '../mocks/mock';
-import { getWalletFormElements, getEditExpenseElements } from '../utils/getWalletElements';
+import { getEditFormExpenseElement, getEditTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
 
 describe('Testa se no WalletForm', () => {
   const MOCK_RESPONSE = {
@@ -47,7 +47,7 @@ describe('Testa se no WalletForm', () => {
   });
   it('Testa se o botão de adicionar despesa está desabilitado quando algum campo não é preenchido', () => {
     renderWithRouterAndRedux(<Wallet />, '/carteira');
-    const addExpenseButton = screen.getByTestId('add-expense-button');
+    const { addExpenseButton } = getWalletFormElements();
     expect(addExpenseButton).toBeDisabled();
   });
   it('Testa se o botão de adicionar despesa está habilitado quando todos os campos são preenchidos', async () => {
@@ -81,20 +81,45 @@ describe('Testa se no WalletForm', () => {
       expect(tagInput).toHaveValue('Alimentação');
     });
   });
-  it.only('Testa se ao clicar no botão de editar despesa o formulário é preenchido com as informações da despesa que será editada', async () => {
+  it('Testa se ao clicar no botão de editar despesa o formulário é preenchido com as informações da despesa que será editada', async () => {
     const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
-    const { editExpenseButton, editExpenseFormButton } = getEditExpenseElements();
+    const { editExpenseButton } = getEditTableExpenseElement();
     const { valueInput, descriptionInput, currencyInput, paymentMethodInput, tagInput } = getWalletFormElements();
 
-    await user.click(editExpenseButton[0]);
+    await user.click(editExpenseButton[1]);
+
+    const { editExpenseFormButton } = getEditFormExpenseElement();
 
     await waitFor(() => {
-      expect(valueInput).toHaveValue('100');
-      expect(descriptionInput).toHaveValue('Compras do mês');
+      expect(descriptionInput).toHaveValue('Viagem');
+      expect(valueInput).toHaveValue(200);
+      expect(currencyInput).toHaveValue('CAD');
+      expect(paymentMethodInput).toHaveValue('Cartão de crédito');
+      expect(tagInput).toHaveValue('Lazer');
+      expect(editExpenseFormButton).toBeInTheDocument();
+    });
+  });
+  it('Testa se ao clicar no botão de editar despesa o botão de adicionar despesa é substituído pelo botão adicionar despesa e o formulário volta ao formato padrão', async () => {
+    const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
+    const { editExpenseButton } = getEditTableExpenseElement();
+    const { valueInput, descriptionInput, currencyInput, paymentMethodInput, tagInput } = getWalletFormElements();
+
+    await user.click(editExpenseButton[1]);
+
+    const { editExpenseFormButton } = getEditFormExpenseElement();
+
+    await waitFor(() => {
+      expect(editExpenseFormButton).toBeInTheDocument();
+    });
+
+    await user.click(editExpenseFormButton);
+
+    await waitFor(() => {
+      expect(valueInput).toHaveValue(0);
+      expect(descriptionInput).toHaveValue('');
       expect(currencyInput).toHaveValue('USD');
       expect(paymentMethodInput).toHaveValue('Dinheiro');
       expect(tagInput).toHaveValue('Alimentação');
-      expect(editExpenseFormButton).toBeInTheDocument();
     });
   });
 });

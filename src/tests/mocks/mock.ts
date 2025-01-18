@@ -98,9 +98,11 @@ export const mockExpensesState = [
   },
 ];
 
-export const mockValidState = { user: { email: '' },
+export const mockValidState = {
+  user: { email: '' },
   wallet: {
-    isLoading: false,
+    editor: false,
+    idToEdit: 0,
     error: '',
     expenses: mockExpensesState },
   _persist: { rehydrated: true, version: -1 } };
