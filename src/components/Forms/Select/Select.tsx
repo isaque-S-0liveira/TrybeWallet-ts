@@ -23,8 +23,8 @@ function Select(props: SelectProps) {
         id={ id }
         data-testid={ testId }
         aria-label={ name }
-        defaultValue={ value }
         onChange={ onChange }
+        value={ value }
         name={ name }
         className="form-select"
         { ...rest }
