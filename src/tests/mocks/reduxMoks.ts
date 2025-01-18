@@ -8,7 +8,7 @@ export const initialState = {
 
 export const mockExpensesState = [
   {
-    id: 0,
+    id: 1,
     value: '100',
     description: 'Compras do mês',
     currency: 'USD',
@@ -17,7 +17,7 @@ export const mockExpensesState = [
     exchangeRates: mockExchangeRates,
   },
   {
-    id: 1,
+    id: 2,
     value: '200',
     description: 'Viagem',
     currency: 'CAD',
