@@ -12,12 +12,15 @@ export async function fillAndSubmitExpenseForm(
     currencyInput,
     tagInput,
     paymentMethodInput,
-    addExpenseButton } = elements;
+    submitButton } = elements;
+
+  await user.clear(valueInput);
+  await user.clear(descriptionInput);
 
   await user.type(valueInput, expense.value);
   await user.type(descriptionInput, expense.description);
   await user.selectOptions(currencyInput, expense.currency);
   await user.selectOptions(tagInput, expense.tag);
   await user.selectOptions(paymentMethodInput, expense.method);
-  await user.click(addExpenseButton);
+  await user.click(submitButton);
 }
