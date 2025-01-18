@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
 import Wallet from '../../pages/Wallet/Wallet';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
-import { mockValidState } from '../mocks/mock';
+import { mockValidState } from '../mocks/reduxMoks';
 
 describe('Testa se no Header do componente Wallet', () => {
   it('O email do usuário é renderizado na tela', () => {
-    renderWithRouterAndRedux(<Wallet />, '/carteira', { user: { email: 'test@email.com' }, wallet: { isLoading: false, error: '', expenses: [] }, _persist: { rehydrated: true, version: -1 } });
+    renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
 
     const emails = screen.getAllByTestId('email-field');
     const email = emails[0];

@@ -1,9 +1,12 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { waitFor } from '@testing-library/react';
-import { vi } from 'vitest';
-import { mockData, mockExchangeRates, mockExpensesState } from '../mocks/mock';
-import getWalletFormElements from '../utils/getWalletFormElements';
+import { it, vi } from 'vitest';
+import { mockData, mockExchangeRates } from '../mocks/mock';
+import { getEditTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
+import { mockExpensesState } from '../mocks/reduxMoks';
+import { fillAndSubmitExpenseForm } from '../utils/interactions';
 
 describe('Testes wallet redux', () => {
   const MOCK_RESPONSE = {
@@ -19,22 +22,15 @@ describe('Testes wallet redux', () => {
   const comprasDoMes = 'Compras do mês';
   const tagAlimentacao = 'Alimentação';
 
-  it.only('Testa se ao clicar no botão as informações são guardas no estado global do redux', async () => {
+  it('Testa se ao clicar no botão as informações são guardas no estado global do redux', async () => {
     const { user, store } = renderWithRouterAndRedux(<Wallet />, '/carteira');
-    const { currencyInput, valueInput, descriptionInput, paymentMethodInput, tagInput, addExpenseButton } = getWalletFormElements();
 
-    await user.type(valueInput, '100');
-    await user.type(descriptionInput, comprasDoMes);
-    await user.selectOptions(currencyInput, 'USD');
-    await user.selectOptions(tagInput, tagAlimentacao);
-    await user.selectOptions(paymentMethodInput, 'Dinheiro');
-    await user.selectOptions(tagInput, 'Alimentação');
-    await user.click(addExpenseButton);
+    await fillAndSubmitExpenseForm(user, getWalletFormElements(), mockExpensesState[0]);
 
     await waitFor(() => {
       expect(store.getState().wallet.expenses).toHaveLength(1);
       expect(store.getState().wallet.expenses[0]).toEqual({
-        id: 0,
+        id: 1,
         value: '100',
         description: comprasDoMes,
         method: 'Dinheiro',
@@ -44,10 +40,9 @@ describe('Testes wallet redux', () => {
       });
     });
   });
-  it.only('Testa se novas despesas são adicionadas corretamente no array exepenses do estado global do redux', async () => {
+  it('Testa se novas despesas são adicionadas corretamente no array exepenses do estado global do redux', async () => {
     const { user, store } = renderWithRouterAndRedux(<Wallet />, '/carteira', { user: { email: '' },
       wallet: {
-        isLoading: false,
         error: '',
         expenses: [
           {
@@ -59,22 +54,18 @@ describe('Testes wallet redux', () => {
             tag: tagAlimentacao,
             exchangeRates: mockExchangeRates,
           },
-        ] },
+        ],
+        editor: false,
+        idToEdit: 0,
+      },
       _persist: { rehydrated: true, version: -1 } });
 
-    const { currencyInput, valueInput, descriptionInput, paymentMethodInput, tagInput, addExpenseButton } = getWalletFormElements();
-
-    await user.type(descriptionInput, 'Viagem');
-    await user.type(valueInput, '200');
-    await user.selectOptions(currencyInput, 'CAD');
-    await user.selectOptions(paymentMethodInput, 'Cartão de crédito');
-    await user.selectOptions(tagInput, 'Lazer');
-
-    await user.click(addExpenseButton);
+    await fillAndSubmitExpenseForm(user, getWalletFormElements(), mockExpensesState[1]);
 
     await waitFor(() => {
       expect(store.getState().wallet.expenses).toHaveLength(2);
       expect(store.getState().wallet.expenses).toEqual(mockExpensesState);
     });
   });
+  // it.fails('Testa se ao clicar no botão de Editar a despesa é editada corretamente no estado global do redux', async () => {});
 });

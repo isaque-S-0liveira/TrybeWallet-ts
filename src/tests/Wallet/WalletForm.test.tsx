@@ -3,8 +3,10 @@ import { screen, waitFor } from '@testing-library/react';
 import { it, vi } from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
-import { mockData, mockValidState, SelectCurrencyOptions } from '../mocks/mock';
+import { mockData, SelectCurrencyOptions } from '../mocks/mock';
 import { getEditFormExpenseElement, getEditTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
+import { mockExpensesState, mockValidState } from '../mocks/reduxMoks';
+import { fillAndSubmitExpenseForm } from '../utils/interactions';
 
 describe('Testa se no WalletForm', () => {
   const MOCK_RESPONSE = {
@@ -64,14 +66,9 @@ describe('Testa se no WalletForm', () => {
 
   it('Testa se ao clicar no botão de adicionar despesa, todos os campos são limpos', async () => {
     const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira');
-    const { currencyInput, valueInput, descriptionInput, paymentMethodInput, tagInput, addExpenseButton } = getWalletFormElements();
+    const { currencyInput, valueInput, descriptionInput, paymentMethodInput, tagInput } = getWalletFormElements();
 
-    await user.type(valueInput, '100');
-    await user.type(descriptionInput, 'Compras do mês');
-    await user.selectOptions(currencyInput, 'USD');
-    await user.selectOptions(paymentMethodInput, 'Dinheiro');
-    await user.selectOptions(tagInput, 'Alimentação');
-    user.click(addExpenseButton);
+    await fillAndSubmitExpenseForm(user, getWalletFormElements(), mockExpensesState[0]);
 
     await waitFor(() => {
       expect(valueInput).toHaveValue(0);
