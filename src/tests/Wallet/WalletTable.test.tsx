@@ -1,12 +1,21 @@
 import { screen, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 import Wallet from '../../pages/Wallet/Wallet';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import { getEditDeleteButtonTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
 import { mockValidState } from '../mocks/reduxMoks';
 import { fillAndSubmitExpenseForm } from '../utils/interactions';
-import { mockExchangeRates } from '../mocks/mock';
+import { mockData, mockExchangeRates } from '../mocks/mock';
 
 describe('Testa se na Tabela do componente Wallet', () => {
+  const MOCK_RESPONSE = {
+    ok: true,
+    status: 200,
+    json: async () => mockData,
+  } as Response;
+
+  const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue(MOCK_RESPONSE);
+  afterEach(() => vi.clearAllMocks());
   it('Os campos do header da tabela são renderizados corretamente', () => {
     renderWithRouterAndRedux(<Wallet />, '/carteira');
 
@@ -71,7 +80,7 @@ describe('Testa se na Tabela do componente Wallet', () => {
     expect(converted2).toBeInTheDocument();
   });
 
-  it.only('testa se ao editar uma despesa, a edição é refletida na tabela', async () => {
+  it('testa se ao editar uma despesa, a edição é refletida na tabela', async () => {
     const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
 
     const { editExpenseButton } = getEditDeleteButtonTableExpenseElement();
@@ -109,9 +118,9 @@ describe('Testa se na Tabela do componente Wallet', () => {
   it('testa se ao deletar uma despesa, a despesa é removida da tabela', async () => {
     const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
 
-    // const { deleteExpenseButton } = getEditTableExpenseElement();
+    const { deleteExpenseButton } = getEditDeleteButtonTableExpenseElement();
 
-    // await user.click(deleteExpenseButton[0]);
+    await user.click(deleteExpenseButton[0]);
 
     await waitFor(() => {
       expect(screen.queryByRole('cell', { name: /compras do mês$/i })).not.toBeInTheDocument();

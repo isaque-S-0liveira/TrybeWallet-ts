@@ -46,7 +46,7 @@ describe('Testes wallet redux', () => {
         error: '',
         expenses: [
           {
-            id: 0,
+            id: 1,
             value: '100',
             description: comprasDoMes,
             currency: 'USD',
@@ -68,7 +68,7 @@ describe('Testes wallet redux', () => {
     });
   });
 
-  it.only('Testa se ao clicar no botão de Editar a despesa é editada corretamente no estado global do redux', async () => {
+  it('Testa se ao clicar no botão de Editar a despesa é editada corretamente no estado global do redux', async () => {
     const { user, store } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
 
     await user.click(getEditDeleteButtonTableExpenseElement().editExpenseButton[0]);
@@ -105,6 +105,16 @@ describe('Testes wallet redux', () => {
           exchangeRates: mockExchangeRates,
         },
       ]);
+    });
+  });
+  it('Testa se ao clicar no botão de deletar a despesa é deletada corretamente no estado global do redux', async () => {
+    const { user, store } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
+
+    await user.click(getEditDeleteButtonTableExpenseElement().deleteExpenseButton[0]);
+
+    await waitFor(() => {
+      expect(store.getState().wallet.expenses).toHaveLength(1);
+      expect(store.getState().wallet.expenses).toEqual([mockExpensesState[1]]);
     });
   });
 });
