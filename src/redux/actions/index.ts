@@ -1,10 +1,11 @@
 import {
+  END_EDIT_EXPENSE,
   ExpenseType,
   REQUEST_FAILED,
   REQUEST_STARTED,
   REQUEST_SUCCESSFUL,
-  SET_USER } from '../../types/ActionsTypes';
-import CurrenciesType from '../../types/CurrenciesType';
+  SET_USER,
+  START_EDIT_EXPENSE } from '../../types/ActionsTypes';
 import { Dispatch } from '../../types/Redux';
 
 export const setUser = (email: string) => ({
@@ -46,5 +47,23 @@ export function addExpense(expense: ExpenseType) {
     } catch (error) {
       dispatch(requestFailed(error as string));
     }
+  };
+}
+
+export function editExpense({ id } : { id: number }) {
+  return {
+    type: START_EDIT_EXPENSE,
+    payload: {
+      id,
+    },
+  };
+}
+
+export function endEditExpense(expense: ExpenseType) {
+  return {
+    type: END_EDIT_EXPENSE,
+    payload: {
+      expense,
+    },
   };
 }
