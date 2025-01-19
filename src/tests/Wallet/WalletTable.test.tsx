@@ -1,7 +1,10 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import Wallet from '../../pages/Wallet/Wallet';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
-import { mockValidState } from '../mocks/mock';
+import { getEditTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
+import { mockValidState } from '../mocks/reduxMoks';
+import { fillAndSubmitExpenseForm } from '../utils/interactions';
+import { mockExchangeRates } from '../mocks/mock';
 
 describe('Testa se na Tabela do componente Wallet', () => {
   it('Os campos do header da tabela são renderizados corretamente', () => {
@@ -67,4 +70,42 @@ describe('Testa se na Tabela do componente Wallet', () => {
     expect(converted1).toBeInTheDocument();
     expect(converted2).toBeInTheDocument();
   });
+
+  it.only('testa se ao editar uma despesa, a edição é refletida na tabela', async () => {
+    const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
+
+    const { editExpenseButton } = getEditTableExpenseElement();
+
+    await user.click(editExpenseButton[0]);
+
+    await fillAndSubmitExpenseForm(user, getWalletFormElements(), {
+      id: 1,
+      description: 'Uber',
+      value: '220',
+      currency: 'CAD',
+      tag: 'Transporte',
+      method: 'Cartão de débito',
+      exchangeRates: mockExchangeRates,
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByRole('cell', { name: /compras do mês$/i })).not.toBeInTheDocument();
+      expect(screen.getByRole('cell', { name: /uber/i })).toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /alimentação/i })).not.toBeInTheDocument();
+      expect(screen.getByRole('cell', { name: /transporte/i })).toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /dinheiro/i })).not.toBeInTheDocument();
+      expect(screen.getByRole('cell', { name: /cartão de débito/i })).toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /100/i })).not.toBeInTheDocument();
+      expect(screen.getByRole('cell', { name: /220/i })).toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /Dólar Americano/i })).not.toBeInTheDocument();
+      expect(screen.getAllByRole('cell', { name: /Dólar Canadense/i })[0]).toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /5.79/i })).not.toBeInTheDocument();
+      expect(screen.getAllByRole('cell', { name: /4.11/i })[0]).toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /579.24/i })).not.toBeInTheDocument();
+      expect(screen.getAllByRole('cell', { name: /904,71/i })[0]).toBeInTheDocument();
+    });
+  });
+
+  // it.failing('testa se ao deletar uma despesa, a linha é removida da tabela', () => {
+  // });
 });
