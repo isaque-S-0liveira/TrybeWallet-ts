@@ -5,12 +5,13 @@ import Select from '../Forms/Select/Select';
 import CurrenciesType from '../../types/CurrenciesType';
 import Button from '../Forms/Button/Button';
 import './WalletForm.css';
-import { addExpense } from '../../redux/actions';
+import { addExpense, endEditExpense } from '../../redux/actions';
 import { Dispatch, ReduxState } from '../../types/Redux';
 
 function WalletForm() {
   const dispatch: Dispatch = useDispatch();
   const walletExpenses = useSelector((state: ReduxState) => state.wallet.expenses);
+  const editExpense = useSelector((state: ReduxState) => state.wallet);
   const IntialForm = {
     id: 0,
     value: '0',
@@ -36,11 +37,17 @@ function WalletForm() {
     e.preventDefault();
 
     const lastExpense = walletExpenses[walletExpenses.length - 1];
-    if (!lastExpense) {
-      dispatch(addExpense({ ...form, id: 0 }));
-    } else {
-      dispatch(addExpense({ ...form, id: lastExpense.id + 1 }));
+    if (!editExpense.editor) {
+      if (lastExpense) {
+        dispatch(addExpense({ ...form, id: lastExpense.id + 1 }));
+      } else {
+        dispatch(addExpense({ ...form, id: 1 }));
+      }
     }
+    if (editExpense.editor) {
+      dispatch(endEditExpense({ ...form }));
+    }
+
     setForm({ ...IntialForm });
   };
 
@@ -60,6 +67,17 @@ function WalletForm() {
     const isFilled = value && description && method && tag && currency;
     setDisabled({ ...disabled, value: !isFilled });
   }, [form]);
+
+  useEffect(() => {
+    const { idToEdit } = editExpense;
+    const expenseToEdit = walletExpenses.find((expense) => expense.id === idToEdit);
+    if (editExpense.editor && expenseToEdit) {
+      setForm({ ...expenseToEdit });
+    }
+    if (!editExpense.editor) {
+      setForm({ ...IntialForm });
+    }
+  }, [editExpense]);
 
   return (
     <form id="main-form" onSubmit={ handleSubmit }>
@@ -136,13 +154,12 @@ function WalletForm() {
       </div>
       <div className="d-flex justify-content-center">
         <Button
-          testId="add-expense-button"
+          testId="submit-button"
           bootstrapClass="col-6 col-sm-3"
           type="submit"
           disabled={ { value: disabled.value, reason: disabled.reason } }
         >
-          {' '}
-          Adicionar despesa
+          {editExpense.editor ? 'Editar despesa' : 'Adicionar despesa'}
         </Button>
       </div>
 
