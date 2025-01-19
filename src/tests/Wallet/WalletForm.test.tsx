@@ -4,7 +4,7 @@ import { it, vi } from 'vitest';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
 import { mockData, SelectCurrencyOptions } from '../mocks/mock';
-import { getEditTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
+import { getEditDeleteButtonTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
 import { mockExpensesState, mockValidState } from '../mocks/reduxMoks';
 import { fillAndSubmitExpenseForm } from '../utils/interactions';
 
@@ -80,7 +80,7 @@ describe('Testa se no WalletForm', () => {
   });
   it('Testa se ao clicar no botão de editar despesa o formulário é preenchido com as informações da despesa que será editada', async () => {
     const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
-    const { editExpenseButton } = getEditTableExpenseElement();
+    const { editExpenseButton } = getEditDeleteButtonTableExpenseElement();
     const { valueInput, descriptionInput, currencyInput, paymentMethodInput, tagInput, submitButton } = getWalletFormElements();
 
     await user.click(editExpenseButton[1]);
@@ -97,7 +97,7 @@ describe('Testa se no WalletForm', () => {
   });
   it('Testa se ao clicar no botão de editar despesa o botão de adicionar despesa é substituído pelo botão adicionar despesa e o formulário volta ao formato padrão', async () => {
     const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
-    const { editExpenseButton } = getEditTableExpenseElement();
+    const { editExpenseButton } = getEditDeleteButtonTableExpenseElement();
     const { valueInput, descriptionInput, currencyInput, paymentMethodInput, tagInput, submitButton } = getWalletFormElements();
 
     await user.click(editExpenseButton[1]);

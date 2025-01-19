@@ -2,7 +2,7 @@
 import { waitFor } from '@testing-library/react';
 import { it, vi } from 'vitest';
 import { mockData, mockExchangeRates } from '../mocks/mock';
-import { getEditTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
+import { getEditDeleteButtonTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
 import Wallet from '../../pages/Wallet/Wallet';
 import { mockExpensesState, mockValidState } from '../mocks/reduxMoks';
@@ -71,7 +71,7 @@ describe('Testes wallet redux', () => {
   it.only('Testa se ao clicar no botão de Editar a despesa é editada corretamente no estado global do redux', async () => {
     const { user, store } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
 
-    await user.click(getEditTableExpenseElement().editExpenseButton[0]);
+    await user.click(getEditDeleteButtonTableExpenseElement().editExpenseButton[0]);
 
     await fillAndSubmitExpenseForm(user, getWalletFormElements(), {
       id: 1,

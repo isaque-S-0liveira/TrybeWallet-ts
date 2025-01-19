@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import Wallet from '../../pages/Wallet/Wallet';
 import renderWithRouterAndRedux from '../utils/renderWithRouterAndRedux';
-import { getEditTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
+import { getEditDeleteButtonTableExpenseElement, getWalletFormElements } from '../utils/getWalletElements';
 import { mockValidState } from '../mocks/reduxMoks';
 import { fillAndSubmitExpenseForm } from '../utils/interactions';
 import { mockExchangeRates } from '../mocks/mock';
@@ -74,7 +74,7 @@ describe('Testa se na Tabela do componente Wallet', () => {
   it.only('testa se ao editar uma despesa, a edição é refletida na tabela', async () => {
     const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
 
-    const { editExpenseButton } = getEditTableExpenseElement();
+    const { editExpenseButton } = getEditDeleteButtonTableExpenseElement();
 
     await user.click(editExpenseButton[0]);
 
@@ -106,6 +106,21 @@ describe('Testa se na Tabela do componente Wallet', () => {
     });
   });
 
-  // it.failing('testa se ao deletar uma despesa, a linha é removida da tabela', () => {
-  // });
+  it('testa se ao deletar uma despesa, a despesa é removida da tabela', async () => {
+    const { user } = renderWithRouterAndRedux(<Wallet />, '/carteira', mockValidState);
+
+    // const { deleteExpenseButton } = getEditTableExpenseElement();
+
+    // await user.click(deleteExpenseButton[0]);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('cell', { name: /compras do mês$/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /alimentação/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /dinheiro/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /100/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /Dólar Americano/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /5.79/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('cell', { name: /579.24/i })).not.toBeInTheDocument();
+    });
+  });
 });

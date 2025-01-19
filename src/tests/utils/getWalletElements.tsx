@@ -11,8 +11,9 @@ export function getWalletFormElements() {
     submitButton: screen.getByTestId('submit-button') as HTMLButtonElement,
   };
 }
-export function getEditTableExpenseElement() {
+export function getEditDeleteButtonTableExpenseElement() {
   return {
     editExpenseButton: screen.getAllByTestId('edit-expense-table-button') as HTMLButtonElement[],
+    deleteExpenseButton: screen.getAllByTestId('delete-expense-table-button') as HTMLButtonElement[],
   };
 }
