@@ -4,6 +4,7 @@ export const REQUEST_SUCCESSFUL = 'REQUEST_SUCCESSFUL';
 export const REQUEST_FAILED = 'REQUEST_FAILED';
 export const START_EDIT_EXPENSE = 'START_EDIT_EXPENSE';
 export const END_EDIT_EXPENSE = 'END_EDIT_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export type ExchangeRate = {
   name: string;

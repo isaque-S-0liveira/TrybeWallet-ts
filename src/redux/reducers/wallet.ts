@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import {
+  DELETE_EXPENSE,
   END_EDIT_EXPENSE,
   ExpenseType,
   REQUEST_FAILED,
@@ -60,6 +61,12 @@ export default function wallet(state = initialState, action: ActionType) {
       return {
         ...state,
         error: action.payload.error || 'Erro desconhecido',
+      };
+
+    case DELETE_EXPENSE:
+      return {
+        ...state,
+        expenses: state.expenses.filter((expense) => expense.id !== action.payload.id),
       };
 
     default:

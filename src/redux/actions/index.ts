@@ -1,4 +1,5 @@
 import {
+  DELETE_EXPENSE,
   END_EDIT_EXPENSE,
   ExpenseType,
   REQUEST_FAILED,
@@ -64,6 +65,15 @@ export function endEditExpense(expense: ExpenseType) {
     type: END_EDIT_EXPENSE,
     payload: {
       expense,
+    },
+  };
+}
+
+export function deleteExpense(id: number) {
+  return {
+    type: DELETE_EXPENSE,
+    payload: {
+      id,
     },
   };
 }
