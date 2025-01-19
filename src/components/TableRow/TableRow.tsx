@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import ValueFormatter from '../../services/valueFormater';
-import { editExpense } from '../../redux/actions';
+import { deleteExpense, editExpense } from '../../redux/actions';
 import { ExpenseType } from '../../types/ActionsTypes';
 
 type TableRowProps = {
@@ -41,10 +41,11 @@ function TableRow({ expense, isFirst }: TableRowProps) {
           <i className="bi bi-pencil-square" />
         </button>
         <button
-          data-testid="delete-expense"
+          data-testid="delete-expense-table-button"
           type="button"
           aria-label="Delete"
           className="btn btn-danger"
+          onClick={ () => dispatch(deleteExpense(expense.id)) }
         >
           <i className="bi bi-trash-fill" />
         </button>
