@@ -14,7 +14,8 @@ describe('Testa se na Tabela do componente Wallet', () => {
     json: async () => mockData,
   } as Response;
 
-  const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue(MOCK_RESPONSE);
+  vi.spyOn(global, 'fetch').mockResolvedValue(MOCK_RESPONSE);
+
   afterEach(() => vi.clearAllMocks());
   it('Os campos do header da tabela são renderizados corretamente', () => {
     renderWithRouterAndRedux(<Wallet />, '/carteira');
