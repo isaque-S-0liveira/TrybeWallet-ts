@@ -1,6 +1,15 @@
 #wallet-form {
     background-color:rgba(225, 229, 235, 0.49);
     padding: 1rem 0;
+    max-height: 300px;
+    overflow: scroll;
+}
+
+@media screen and (min-width: 768px) {
+    #wallet-form {  
+         max-height: 100%;
+         overflow: hidden;
+    }
 }
 
 #wallet-form input,
