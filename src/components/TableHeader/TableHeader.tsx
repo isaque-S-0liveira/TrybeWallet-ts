@@ -1,8 +1,7 @@
 function TableHeader() {
   return (
     <tr>
-      <th id="th-1">#</th>
-      <th>Descrição</th>
+      <th id="th-1">Descrição</th>
       <th>Tag</th>
       <th>Método de pagamento</th>
       <th data-testid="value">Valor</th>

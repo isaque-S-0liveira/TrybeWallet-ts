@@ -14,7 +14,6 @@ function TableRow({ expense, isFirst }: TableRowProps) {
 
   return (
     <tr>
-      <td className={ rowClass }>{expense.id}</td>
       <td className={ rowClass }>{expense.description}</td>
       <td className={ rowClass }>{expense.tag}</td>
       <td className={ rowClass }>{expense.method}</td>
