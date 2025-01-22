@@ -10,7 +10,7 @@ import { store, persistor } from './redux/index.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/TrybeWallet-ts">
       <Provider store={ store }>
         <PersistGate loading={ null } persistor={ persistor }>
           <App />
