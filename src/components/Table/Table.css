@@ -110,7 +110,7 @@
     #main-table {
         position: absolute;
         top: 84px; 
-        max-width: 95%;
+        
     }
 
     #container-fantasma {
@@ -120,4 +120,11 @@
     #main-table td {
         max-width: 110px;
     }
+}
+
+@media screen and (min-width: 1200px) {
+    #main-table {
+        max-width: 95%;
+    }
+    
 }
