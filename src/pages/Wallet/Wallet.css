@@ -13,13 +13,6 @@
     z-index: 1;
 }
 
-@media screen and (min-width: 992px) {
-    #main-header {
-       width: 90%;
-    }
-    
-}
-
 @media screen and (min-width: 1200px) {
     #main-header {
         width: 86%;
